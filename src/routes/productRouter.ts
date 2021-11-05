@@ -12,7 +12,7 @@ import { userAuthenticated } from '../middleware/userAuthenticated'
 import { createValidation, decrementValidation, incrementValidation, updateValidation } from './productHandleValidation'
 
 export const productRouter: Router = Router()
-
+    
 productRouter.post('/create', createValidation(), userAuthenticated, new CreateProductController().handle)
 productRouter.get('/getcategory', new GetProductByCategoryController().handle)
 productRouter.get('/getname', new GetProductByNameController().handle)
