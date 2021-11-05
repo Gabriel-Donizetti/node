@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { param } from 'express-validator';
 import { CreateProductService } from '../../services/product/createProductService'
 
 const { validationResult } = require('express-validator');
@@ -8,6 +9,7 @@ const myValidationResult = validationResult.withDefaults({
     formatter: error => {
       return {
         msg: error.msg,
+        param: error.param
       };
     },
   });
