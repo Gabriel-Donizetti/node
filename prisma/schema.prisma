@@ -35,17 +35,16 @@ model Product{
   category Category @relation(fields: [product_category], references: [category], onDelete: Cascade)
   product_category      String
 
-  // shipping Shipping @relation(fields: [product_shipping], references: [id])
-  // product_shipping  String
-
+  shipping Shipping? @relation(fields: [shipping_id], references: [id])
+  shipping_id           String? @unique
   @@map("product")  
 }
 
-// model Shipping {
-//   id            String@id @default(uuid())
-//   created_at    DateTime @default(now())
-//   amout         Int 
-  
-//   products Product[]
-// }
+model Shipping{
+  id            String@id @default(uuid())
+  created_at    DateTime @default(now())
+  product_amout Int
 
+  products Product[]
+
+}
