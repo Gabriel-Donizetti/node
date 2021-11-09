@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { validationResult } from 'express-validator';
-import { CreateShippingService } from '../../services/shipping/createShippingService';
+import { GetShippingService } from '../../services/shipping/getShippingsService';
 
 const myValidationResult = validationResult.withDefaults({
     formatter: error => {
@@ -11,7 +11,7 @@ const myValidationResult = validationResult.withDefaults({
     },
   });
 
-class CreateShippingController {
+class GetShippingController {
     async handle(req: Request, res: Response){
 
         const errors = myValidationResult(req);
@@ -20,18 +20,16 @@ class CreateShippingController {
             return res.status(422).json({ errors: errors.array() });
         }
 
-        const { amout, product_id } = req.body
-
-        const service = new CreateShippingService()
+        const service = new GetShippingService()
 
         try {
-            const result = await service.execute(amout, product_id)
+            const result = await service.execute()
 
             return res.json(result)
         } catch (error) {
-            return res.status(400).json({message: 'Invalid'})
+            return res.status(400).json({message: 'Shippings not found'})
         }
     }
 }
 
-export { CreateShippingController }
+export { GetShippingController }
