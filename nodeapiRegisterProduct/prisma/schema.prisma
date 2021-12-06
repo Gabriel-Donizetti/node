@@ -1,51 +1,60 @@
 datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
-} 
+}
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 model User {
-  id        String@id @default(uuid())
-  name      String
-  email     String@unique 
-  password  String
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
   //avatar    String
-
 
   @@map("user")
 }
 
-model Category{
-  category  String@unique 
+model Category {
+  category         String    @unique
+  product_category Product[]
 
   @@map("category")
-  product_category  Product[] 
 }
 
-model Product{
-  id            String@id @default(uuid())
-  name          String @unique
-  price         Float
-  amout         Int
-
-  category Category @relation(fields: [product_category], references: [category], onDelete: Cascade)
-  product_category      String
-
-  // shipping Shipping @relation(fields: [product_shipping], references: [id])
-  // product_shipping  String
-
-  @@map("product")  
-}
-
-// model Shipping {
-//   id            String@id @default(uuid())
-//   created_at    DateTime @default(now())
-//   amout         Int 
+model Product {
+  id               String               @id @default(uuid())
+  name             String               @unique
+  price            Float
+  amout            Int
   
-//   products Product[]
-// }
+  category         Category             @relation(fields: [product_category], references: [category], onDelete: Cascade)
+  product_category String
+  
+  shipping         ProductsOnShipping[]
 
+  @@map("product")
+}
+
+model Shipping {
+  id         String               @id @default(uuid())
+  adress     String
+  created_by String
+  
+  product    ProductsOnShipping[]
+}
+
+model ProductsOnShipping {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  amout       Int
+  
+  product     Product  @relation(fields: [product_id], references: [id])
+  product_id  String
+  
+  shipping    Shipping @relation(fields: [shipping_id], references: [id])
+  shipping_id String
+}
