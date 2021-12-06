@@ -7,6 +7,11 @@ class SignInUserService {
                 name,
                 email,
                 password
+            },
+            select:{
+                id: true,
+                name: true,
+                email: true
             }
         })
 

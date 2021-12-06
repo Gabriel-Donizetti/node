@@ -8,6 +8,11 @@ class LoginUserService {
          const user = await prismaClient.user.findUnique({
              where:{
                  email
+             },
+             select:{
+                 id:true,
+                 name:true,
+                 email:true
              }
          })
         
