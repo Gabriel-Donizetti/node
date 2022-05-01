@@ -9,7 +9,7 @@ app.use(cors())
 app.use(json())
 
 app.get('/', (request, response)=>{
-  return response.json({message: Server is up})
+  return response.json({message: 'Server is up'})
 })
 app.use('/', router)
 
