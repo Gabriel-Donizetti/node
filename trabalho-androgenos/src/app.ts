@@ -8,6 +8,9 @@ const app = express()
 app.use(cors())
 app.use(json())
 
+app.get('/', (request, response)=>{
+  return response.json({message: Server is up})
+})
 app.use('/', router)
 
 const serverHttp = http.createServer(app)
